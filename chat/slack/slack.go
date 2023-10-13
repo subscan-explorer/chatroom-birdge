@@ -39,6 +39,9 @@ type App struct {
 var app *App
 
 func NewClient(ctx context.Context, conf conf.Slack) {
+	if len(conf.Token) == 0 {
+		return
+	}
 	app = new(App)
 	app.log = log.New(os.Stdout, "Slack: ", log.Lshortfile|log.Ldate|log.Ltime)
 	app.Users = make(map[string]*model.User)

@@ -29,6 +29,9 @@ type App struct {
 var app *App
 
 func NewClient(_ context.Context, conf conf.Discord) {
+	if len(conf.Token) == 0 {
+		return
+	}
 	app = new(App)
 	app.log = log.New(os.Stdout, "Discord: ", log.Lshortfile|log.Ldate|log.Ltime)
 	app.cli, _ = discordgo.New("Bot " + conf.Token)

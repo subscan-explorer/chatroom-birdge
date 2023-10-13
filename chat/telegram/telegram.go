@@ -28,6 +28,9 @@ type App struct {
 var app *App
 
 func NewClient(_ context.Context, conf conf.Telegram) {
+	if len(conf.Token) == 0 {
+		return
+	}
 	app = new(App)
 	app.log = log.New(os.Stdout, "Telegram: ", log.Lshortfile|log.Ldate|log.Ltime)
 	cli, err := tgbotapi.NewBotAPI(conf.Token)
