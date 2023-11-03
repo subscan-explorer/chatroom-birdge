@@ -10,6 +10,19 @@ on:
     branches: ["develop"]
 
 jobs:
+  gitleaks:
+    name: gitleaks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: init gitleaks
+        run: |
+          wget ${{ vars.GITLEAKS_URL }}
+          tar -zxvf ${{ vars.GITLEAKS_FILENAME }} -C /tmp/
+          sudo mv /tmp/gitleaks /usr/local/bin/
+      - name: gitleaks
+        run: |
+          gitleaks detect  -v --redact --no-git
   build-and-deploy:
     name: Build and Deploy
     runs-on: ubuntu-latest
