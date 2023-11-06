@@ -1,0 +1,31 @@
+room:
+  - name: "test"
+    chat:
+      - type: "slack"
+        chatID:
+          - ""
+      - type: "discord"
+        chatID:
+          - ""
+      - type: "telegram"
+        chatID:
+          - ""
+
+slack:
+  token:
+  appLevelToken:
+
+discord:
+  token:
+
+telegram:
+  token:
+
+emoji: # emoji type order. slack,emoji
+  - "+1,👍"
+  - "clap,👏"
+  - "ok_hand,👌"
+  - "white_check_mark,✅"
+  - "eyes,👀"
+  - "smile,😄"
+
