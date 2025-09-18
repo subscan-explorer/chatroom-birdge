@@ -21,13 +21,11 @@ RUN go build -o chatroom cmd/main.go
 
 FROM alpine as prod
 
-RUN mkdir -p /workspace/bin/
-
-COPY --from=build /workspace/release/chatroom /workspace/bin/chatroom
+COPY --from=build /workspace/release/chatroom /chatroom/bin/chatroom
 
 WORKDIR /workspace/
 
-CMD ["./bin/chatroom"]
+CMD ["/chatroom/bin/chatroom"]
 
 
 
