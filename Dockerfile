@@ -20,7 +20,7 @@ WORKDIR /workspace/release
 ADD . .
 RUN go build -o chatroom cmd/main.go
 
-FROM alpine as prod
+FROM golang:1.24  as prod
 
 RUN mkdir -p /workspace/bin/
 
