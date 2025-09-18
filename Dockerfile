@@ -1,8 +1,14 @@
-FROM golang:1.21 as build
+FROM golang:1.24 as build
 
-ENV CGO_ENABLED 0
 ENV GOOS linux
 ENV GOARCH=amd64
+ENV CGO_ENABLED=1
+
+RUN apt-get update && apt-get install -y \
+    libolm-dev \
+    libsqlite3-dev \
+    pkg-config \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build/cache
 ADD go.mod .
@@ -14,9 +20,14 @@ WORKDIR /workspace/release
 ADD . .
 RUN go build -o chatroom cmd/main.go
 
-FROM alpine as prod
+FROM golang:1.24  as prod
 
 RUN mkdir -p /workspace/bin/
+
+RUN apt-get update && \
+    apt-get install -y libolm3 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /workspace/release/chatroom /workspace/bin/chatroom
 

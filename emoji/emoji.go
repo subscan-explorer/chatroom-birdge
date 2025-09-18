@@ -32,15 +32,15 @@ func SlackConvertEmoji(emoji string) string {
 }
 
 func Convert(source, target model.TypeSource, emoji string) string {
-	if source == target || source >= EmojiType || target >= EmojiType {
+	if source == target || (source >= 1 && target >= 1) {
 		return emoji
 	}
 
 	sourceIdx, targetIdx := 0, 0
-	if source == model.TelegramType || source == model.DiscordType {
+	if source == model.TelegramType || source == model.DiscordType || source == model.MatrixType {
 		sourceIdx = 1
 	}
-	if target == model.TelegramType || target == model.DiscordType {
+	if target == model.TelegramType || target == model.DiscordType || target == model.MatrixType {
 		targetIdx = 1
 	}
 	for _, e := range emojis {

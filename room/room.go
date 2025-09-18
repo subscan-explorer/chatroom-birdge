@@ -2,6 +2,7 @@ package room
 
 import (
 	"chatroom/chat/discord"
+	"chatroom/chat/matrix"
 	"chatroom/chat/slack"
 	"chatroom/chat/telegram"
 	"chatroom/conf"
@@ -68,6 +69,8 @@ func NewChatRoom(_ context.Context, chat conf.Room) *ChatRoom {
 				room.Room = append(room.Room, discord.NewDiscordChat(id, room.Receive))
 			case "telegram":
 				room.Room = append(room.Room, telegram.NewTelegramChat(id, room.Receive))
+			case "matrix":
+				room.Room = append(room.Room, matrix.NewMatrixChat(id, room.Receive))
 			}
 		}
 	}

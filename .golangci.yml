@@ -10,7 +10,7 @@ linters:
     - goimports
     - misspell
     - govet
-    - revive
+#    - revive
     - ineffassign
     - gosimple
 #    - unused

@@ -11,10 +11,10 @@ type List[T any] struct {
 	max   int
 }
 
-func NewMessageList[T any](cap int) *List[T] {
+func NewMessageList[T any](m int) *List[T] {
 	l := new(List[T])
 	l.inner = list.New()
-	l.max = cap
+	l.max = m
 	return l
 }
 

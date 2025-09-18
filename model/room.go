@@ -12,6 +12,7 @@ const (
 	SlackType TypeSource = iota
 	DiscordType
 	TelegramType
+	MatrixType
 )
 
 const (
@@ -27,11 +28,13 @@ const (
 func (t TypeSource) String() string {
 	switch t {
 	case SlackType:
-		return "slack"
+		return "Slack"
 	case DiscordType:
-		return "discord"
+		return "Discord"
 	case TelegramType:
 		return "Telegram"
+	case MatrixType:
+		return "Matrix"
 	}
 	return "Unknown"
 }
