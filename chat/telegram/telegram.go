@@ -47,8 +47,8 @@ func NewClient(_ context.Context, conf conf.Telegram) {
 }
 
 func (a *App) init() {
-	channelIds := conf.Conf.GetTelegramChat()
-	a.getChannelInfo(channelIds...)
+	channelIDs := conf.Conf.GetTelegramChat()
+	a.getChannelInfo(channelIDs...)
 	//a.getUserInfo()
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 30
@@ -169,14 +169,14 @@ func (a *App) GetUserInfo(channelID, userID string) *model.User {
 	return nil
 }
 
-func (a *App) GetUsersInfo(channelID string, userIds ...string) map[string]*model.User {
-	if len(userIds) == 0 {
+func (a *App) GetUsersInfo(channelID string, userIDs ...string) map[string]*model.User {
+	if len(userIDs) == 0 {
 		return nil
 	}
 	a.lock.RLock()
 	var unknownUsers []string
 	var result = make(map[string]*model.User)
-	for _, id := range userIds {
+	for _, id := range userIDs {
 		if v := a.Users[id]; v != nil {
 			result[id] = v
 		} else {

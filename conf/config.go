@@ -22,6 +22,7 @@ type Config struct {
 	slackChat    []string `yaml:"-"`
 	discordChat  []string `yaml:"-"`
 	telegramChat []string `yaml:"-"`
+	matrixChat   []string `yaml:"-"`
 }
 
 type Room struct {
@@ -35,10 +36,10 @@ type RoomChat struct {
 }
 
 type Matrix struct {
-	Name     string `yaml:"name"`
 	Host     string `yaml:"host"`
 	User     string `yaml:"user"`
 	Password string `yaml:"password"`
+	Username string `yaml:"username"`
 }
 
 type Discord struct {
@@ -72,7 +73,7 @@ func InitConf(_ context.Context) {
 		log.Fatalf("failed to parse configuration file. err: %s\n", err.Error())
 	}
 	// check channel
-	discordConf, slackConf, telegramConf := false, false, false
+	discordConf, slackConf, telegramConf, elementConf := false, false, false, false
 	for _, c := range Conf.Room {
 		for _, chat := range c.Chat {
 			switch chat.Type {
@@ -85,6 +86,9 @@ func InitConf(_ context.Context) {
 			case "telegram":
 				telegramConf = true
 				Conf.telegramChat = append(Conf.telegramChat, chat.ChatID...)
+			case "matrix":
+				elementConf = true
+				Conf.matrixChat = append(Conf.matrixChat, chat.ChatID...)
 			}
 		}
 	}
@@ -103,6 +107,11 @@ func InitConf(_ context.Context) {
 			log.Fatalln("needs to configure telegram token")
 		}
 	}
+	if elementConf {
+		if len(Conf.Matrix.Host) == 0 {
+			log.Fatalln("needs to configure element token")
+		}
+	}
 	log.Printf("config: %+v\n", Conf)
 }
 
@@ -115,3 +124,4 @@ func (c Config) GetDiscordChat() []string {
 func (c Config) GetTelegramChat() []string {
 	return c.telegramChat
 }
+func (c Config) GetMatrixChat() []string { return c.matrixChat }

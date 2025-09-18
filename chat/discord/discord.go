@@ -46,9 +46,9 @@ func NewClient(_ context.Context, conf conf.Discord) {
 }
 
 func (a *App) init() {
-	channelIds := conf.Conf.GetDiscordChat()
+	channelIDs := conf.Conf.GetDiscordChat()
 	var userIds []string
-	for _, info := range a.GetChannelsInfo(channelIds...) {
+	for _, info := range a.GetChannelsInfo(channelIDs...) {
 		a.log.Printf("sync discord channel: %+v\n", *info)
 		userIds = append(userIds, info.Members...)
 	}
@@ -59,16 +59,16 @@ func (a *App) init() {
 }
 
 func (a *App) handler() {
-	a.cli.AddHandler(func(s *discordgo.Session, p *discordgo.Ready) {
+	a.cli.AddHandler(func(_ *discordgo.Session, _ *discordgo.Ready) {
 		a.log.Println("Discord Bot is up!")
 	})
-	a.cli.AddHandler(func(s *discordgo.Session, c *discordgo.Disconnect) {
+	a.cli.AddHandler(func(_ *discordgo.Session, _ *discordgo.Disconnect) {
 		a.log.Println("Discord Disconnection")
 	})
-	a.cli.AddHandler(func(s *discordgo.Session, r *discordgo.Resumed) {
+	a.cli.AddHandler(func(_ *discordgo.Session, _ *discordgo.Resumed) {
 		a.log.Println("Discord connection Resumed")
 	})
-	a.cli.AddHandler(func(s *discordgo.Session, c *discordgo.InteractionCreate) {
+	a.cli.AddHandler(func(_ *discordgo.Session, _ *discordgo.InteractionCreate) {
 		a.log.Println("InteractionCreate")
 	})
 	a.handlerMessageEvent()
@@ -316,14 +316,14 @@ func (a *App) GetUserInfo(userID string) *model.User {
 	return nil
 }
 
-func (a *App) GetUsersInfo(userIds ...string) map[string]*model.User {
-	if len(userIds) == 0 {
+func (a *App) GetUsersInfo(userIDs ...string) map[string]*model.User {
+	if len(userIDs) == 0 {
 		return nil
 	}
 	a.lock.RLock()
 	var unknownUsers []string
 	var result = make(map[string]*model.User)
-	for _, id := range userIds {
+	for _, id := range userIDs {
 		if v := a.Users[id]; v != nil {
 			result[id] = v
 		} else {

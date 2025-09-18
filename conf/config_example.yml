@@ -10,6 +10,9 @@ room:
       - type: "telegram"
         chatID:
           - ""
+      - type: "matrix"
+        chatID:
+          - ""
 
 slack:
   token:
@@ -20,6 +23,10 @@ discord:
 
 telegram:
   token:
+matrix:
+  host: https://matrix.org
+  user: ""
+  password: ""
 
 emoji: # emoji type order. slack,emoji
   - "+1,👍"

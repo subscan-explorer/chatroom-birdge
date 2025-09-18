@@ -82,13 +82,13 @@ func (c *App) init() {
 
 func (c *App) eventLoop(ctx context.Context) error {
 	handler := socketmode.NewSocketmodeHandler(c.cli)
-	handler.Handle(socketmode.EventTypeConnecting, func(event *socketmode.Event, client *socketmode.Client) {
+	handler.Handle(socketmode.EventTypeConnecting, func(_ *socketmode.Event, _ *socketmode.Client) {
 		c.log.Println("connecting")
 	})
-	handler.Handle(socketmode.EventTypeConnectionError, func(event *socketmode.Event, client *socketmode.Client) {
+	handler.Handle(socketmode.EventTypeConnectionError, func(_ *socketmode.Event, _ *socketmode.Client) {
 		c.log.Println("Connection failed. Retrying later...")
 	})
-	handler.Handle(socketmode.EventTypeHello, func(event *socketmode.Event, client *socketmode.Client) {
+	handler.Handle(socketmode.EventTypeHello, func(_ *socketmode.Event, _ *socketmode.Client) {
 		//for _, id := range c.getChannelIds() {
 		//	if channel, _, err := client.PostMessage(id, slack.MsgOptionText("sync message online", true)); err != nil {
 		//		log.Printf("failed to send message. channel [%s], err: %s", channel, err.Error())
@@ -96,10 +96,10 @@ func (c *App) eventLoop(ctx context.Context) error {
 		//}
 		c.log.Println("success receive message.")
 	})
-	handler.Handle(socketmode.EventTypeConnected, func(event *socketmode.Event, client *socketmode.Client) {
+	handler.Handle(socketmode.EventTypeConnected, func(_ *socketmode.Event, _ *socketmode.Client) {
 		c.log.Println("Connected")
 	})
-	handler.Handle(socketmode.EventTypeEventsAPI, func(event *socketmode.Event, client *socketmode.Client) {
+	handler.Handle(socketmode.EventTypeEventsAPI, func(event *socketmode.Event, _ *socketmode.Client) {
 		apiEvent, ok := event.Data.(slackevents.EventsAPIEvent)
 		if !ok {
 			return
