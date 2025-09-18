@@ -1,7 +1,7 @@
 name: Production
 on:
   pull_request:
-    branches: ["develop", "master"]
+    branches: ["develop", "master", "main"]
   push:
     ##
     # DO NOT FORGET TO UPDATE THE "if" STATEMENTS BELOW!
