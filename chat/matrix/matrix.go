@@ -65,7 +65,7 @@ func NewClient(ctx context.Context, conf conf.Matrix) {
 
 	//cli.Store = mautrix.NewMemorySyncStore()
 	// init sec
-	cryptoHelper, err := cryptohelper.NewCryptoHelper(cli, []byte("meow"), "mautrix.db")
+	cryptoHelper, err := cryptohelper.NewCryptoHelper(cli, []byte("meow"), conf.CryptoStorePath)
 	if err != nil {
 		panic(err)
 	}

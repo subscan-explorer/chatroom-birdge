@@ -36,10 +36,11 @@ type RoomChat struct {
 }
 
 type Matrix struct {
-	Host     string `yaml:"host"`
-	User     string `yaml:"user"`
-	Password string `yaml:"password"`
-	Username string `yaml:"username"`
+	Host            string `yaml:"host"`
+	User            string `yaml:"user"`
+	Password        string `yaml:"password"`
+	CryptoStorePath string `yaml:"cryptoStorePath"`
+	Username        string `yaml:"username"`
 }
 
 type Discord struct {

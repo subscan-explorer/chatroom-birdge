@@ -15,18 +15,18 @@ ADD go.mod .
 ADD go.sum .
 RUN go mod download
 
-WORKDIR /chatroom/release
+WORKDIR /workspace/release
 
 ADD . .
 RUN go build -o chatroom cmd/main.go
 
 FROM alpine as prod
 
-COPY --from=build /chatroom/release/chatroom /chatroom/bin/chatroom
+COPY --from=build /workspace/release/chatroom /workspace/bin/chatroom
 
 WORKDIR /workspace/
 
-CMD ["/chatroom/bin/chatroom"]
+CMD ["./bin/chatroom"]
 
 
 

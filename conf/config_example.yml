@@ -27,7 +27,7 @@ matrix:
   host: https://matrix.org
   user: ""
   password: ""
-
+  cryptoStorePath: ""
 emoji: # emoji type order. slack,emoji
   - "+1,👍"
   - "clap,👏"
