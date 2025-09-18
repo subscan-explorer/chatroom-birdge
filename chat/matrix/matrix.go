@@ -84,6 +84,7 @@ func NewClient(ctx context.Context, conf conf.Matrix) {
 	if err = app.eventLoop(ctx); err != nil {
 		app.log.Panicln(err.Error())
 	}
+	app.log.Println("matrix init complete")
 }
 
 func (a *App) init(ctx context.Context) {
