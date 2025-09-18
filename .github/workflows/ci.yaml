@@ -61,7 +61,7 @@ jobs:
 
       - name: Build and publish preview image
         uses: docker/build-push-action@v3
-        if: contains(steps.check-base.outputs.COMMIT_MESSAGE, '[build preview]') && !startsWith(github.ref, 'refs/tags/') == false && github.ref != 'refs/heads/develop'
+        if: "contains(steps.check-base.outputs.COMMIT_MESSAGE, '[build preview]') && !startsWith(github.ref, 'refs/tags/')"
         with:
           context: .
           push: true
