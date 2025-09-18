@@ -11,7 +11,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/rs/zerolog"
 	"maunium.net/go/mautrix"
 	"maunium.net/go/mautrix/crypto/cryptohelper"
 	"maunium.net/go/mautrix/event"
@@ -51,7 +50,6 @@ func NewClient(ctx context.Context, conf conf.Matrix) {
 	if err != nil {
 		app.log.Panicln(err.Error())
 	}
-	cli.Log = zerolog.New(os.Stdout).With().Timestamp().Logger().Level(zerolog.DebugLevel)
 	app.cli = cli
 
 	//var loginResp *mautrix.RespLogin
