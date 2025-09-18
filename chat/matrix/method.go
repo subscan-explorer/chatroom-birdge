@@ -66,7 +66,10 @@ func (a *App) updateChannelMember(ctx context.Context, roomId ...string) {
 	channelInfo := make(map[string]*model.ChannelInfo)
 	userInfo := make(map[string]*model.User)
 	for _, rid := range roomId {
-		summary, _ := a.cli.GetRoomSummary(ctx, rid)
+		summary, err := a.cli.GetRoomSummary(ctx, rid)
+		if err != nil {
+			continue
+		}
 		info := model.ChannelInfo{
 			ID:   rid,
 			Name: summary.Name,

@@ -130,6 +130,16 @@ func (a *App) eventLoop(ctx context.Context) error {
 	//	data, _ := json.Marshal(evt)
 	//	a.log.Println(string(data))
 	//})
+	syncer.OnEventType(event.EventRedaction, func(ctx context.Context, evt *event.Event) {
+		if v := time.UnixMilli(evt.Timestamp).Sub(nowTime); v.Seconds() < -20 {
+			a.log.Println("filter message", evt.Sender, evt.RoomID, evt.Type, v.Seconds())
+			return
+		}
+		if evt.Sender.String() == a.SelfID {
+			return
+		}
+		a.handlerMessage(ctx, evt)
+	})
 	syncer.OnEventType(event.EventReaction, func(ctx context.Context, evt *event.Event) {
 		if v := time.UnixMilli(evt.Timestamp).Sub(nowTime); v.Seconds() < -20 {
 			a.log.Println("filter message", evt.Sender, evt.RoomID, evt.Type, v.Seconds())
@@ -206,7 +216,7 @@ func (a *App) handlerMessage(_ context.Context, evt *event.Event) {
 		} else {
 			msg.Message = formatMessageBody(em.MsgType, em.Body)
 		}
-		a.ReceiveMessage(msg)
+		go a.ReceiveMessage(msg)
 	case event.EventReaction:
 		msg.ID = evt.ID.String()
 		msg.Type = model.MessageTypeActionAdd
@@ -220,7 +230,12 @@ func (a *App) handlerMessage(_ context.Context, evt *event.Event) {
 				msg.ID = em.EventID.String()
 			}
 		}
-		a.ReceiveMessage(msg)
+		go a.ReceiveMessage(msg)
+	case event.EventRedaction:
+		msg.Type = model.MessageTypeTextDelete
+		msg.Channel = a.getChannelInfo(evt.RoomID.String())
+		msg.ID = evt.Redacts.String()
+		go a.ReceiveMessage(msg)
 	default:
 	}
 }

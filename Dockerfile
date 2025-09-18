@@ -24,6 +24,11 @@ FROM golang:1.24  as prod
 
 RUN mkdir -p /workspace/bin/
 
+RUN apt-get update && \
+    apt-get install -y libolm3 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 COPY --from=build /workspace/release/chatroom /workspace/bin/chatroom
 
 WORKDIR /workspace/
