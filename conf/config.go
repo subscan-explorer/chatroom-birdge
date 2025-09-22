@@ -109,8 +109,8 @@ func InitConf(_ context.Context) {
 		}
 	}
 	if elementConf {
-		if len(Conf.Matrix.Host) == 0 {
-			log.Fatalln("needs to configure element token")
+		if len(Conf.Matrix.Host) == 0 || len(Conf.Matrix.User) == 0 || len(Conf.Matrix.Password) == 0 || len(Conf.Matrix.CryptoStorePath) == 0 {
+			log.Fatalln("needs to configure matrix host")
 		}
 	}
 	log.Printf("config: %+v\n", Conf)

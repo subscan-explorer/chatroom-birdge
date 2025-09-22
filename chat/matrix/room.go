@@ -61,7 +61,7 @@ func (c Chat) SendReplyMessage(parentID string, msg model.IChatMessage) (string,
 	var rsp *mautrix.RespSendEvent
 	var err error
 	if len(parentID) == 0 {
-		rsp, err = app.cli.SendText(context.Background(), id.RoomID(c.RoomId), fmt.Sprintf("%s\n[Reply Messsage, Parent message not found]", c.formatText(msg)))
+		rsp, err = app.cli.SendText(context.Background(), id.RoomID(c.RoomId), fmt.Sprintf("%s\n[Reply Message, Parent message not found]", c.formatText(msg)))
 	} else {
 		rsp, err = app.cli.SendMessageEvent(context.Background(), id.RoomID(c.RoomId), event.EventMessage, &event.MessageEventContent{
 			MsgType: event.MsgText,
@@ -85,7 +85,7 @@ func (c Chat) UpdateMessage(messageID string, msg model.IChatMessage) error {
 	var rsp *mautrix.RespSendEvent
 	var err error
 	if len(messageID) == 0 {
-		rsp, err = app.cli.SendText(context.Background(), id.RoomID(c.RoomId), fmt.Sprintf("%s\n[Edit Messsage, Original message not found]", c.formatText(msg)))
+		rsp, err = app.cli.SendText(context.Background(), id.RoomID(c.RoomId), fmt.Sprintf("%s\n[Edit Message, Original message not found]", c.formatText(msg)))
 	} else {
 		rsp, err = app.cli.SendMessageEvent(context.Background(), id.RoomID(c.RoomId), event.EventMessage, &event.MessageEventContent{
 			MsgType: event.MsgText,
@@ -130,9 +130,9 @@ func (c Chat) RemoveReactionAll(messageID string) error {
 func (c Chat) formatText(msg model.IChatMessage) string {
 	var text string
 	if msg.Source() == c.Source() {
-		text = fmt.Sprintf("From: [%s] User: [%s]Send: \n%s", msg.BelongChannel().CName(), msg.BelongUser().UName(), msg.RawText())
+		text = fmt.Sprintf("From: [%s] User: [%s] Send: \n%s", msg.BelongChannel().CName(), msg.BelongUser().UName(), msg.RawText())
 	} else {
-		text = fmt.Sprintf("From: [%s] User: [%s]Send: \n%s", msg.Source(), msg.BelongUser().UName(), c.mentionParsing(msg.Text()))
+		text = fmt.Sprintf("From: [%s] User: [%s] Send: \n%s", msg.Source(), msg.BelongUser().UName(), c.mentionParsing(msg.Text()))
 	}
 	if att := msg.Attachment(); len(att) != 0 {
 		text += model.Attachments(att).String()
