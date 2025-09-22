@@ -32,7 +32,7 @@ func SlackConvertEmoji(emoji string) string {
 }
 
 func Convert(source, target model.TypeSource, emoji string) string {
-	if source == target || (source >= 1 && target >= 1) {
+	if source == target || (source > model.SlackType && target > model.SlackType) {
 		return emoji
 	}
 
