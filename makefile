@@ -2,7 +2,7 @@
 
 BUILD_PATH=cmd
 
-export CGO_ENABLED=0
+#export CGO_ENABLED=0
 
 getdeps:
 	@mkdir -p $(GOPATH)/bin

@@ -2,6 +2,7 @@ package main
 
 import (
 	"chatroom/chat/discord"
+	"chatroom/chat/matrix"
 	"chatroom/chat/slack"
 	"chatroom/chat/telegram"
 	"chatroom/conf"
@@ -23,7 +24,7 @@ func main() {
 	slack.NewClient(ctx, conf.Conf.Slack)
 	discord.NewClient(ctx, conf.Conf.Discord)
 	telegram.NewClient(ctx, conf.Conf.Telegram)
-
+	matrix.NewClient(ctx, conf.Conf.Matrix)
 	//handler := server.Route()
 	go listenExit(cancel)
 	room.NewMainRoom(ctx)

@@ -69,3 +69,19 @@ func FilterSlice[T any](s []T, isFilter func(T) bool) []T {
 	}
 	return ns
 }
+
+func Map[T any, S any](data []S, f func(v S) T) []T {
+	var result = make([]T, 0, len(data))
+	for _, datum := range data {
+		result = append(result, f(datum))
+	}
+	return result
+}
+
+func MapKeyToSlice[K comparable, V any](m map[K]V) []K {
+	result := make([]K, 0, len(m))
+	for k := range m {
+		result = append(result, k)
+	}
+	return result
+}

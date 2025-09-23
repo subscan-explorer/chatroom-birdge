@@ -50,7 +50,7 @@ func (c Chat) SendMessage(msg model.IChatMessage) (string, error) {
 
 func (c Chat) SendReplyMessage(parentID string, msg model.IChatMessage) (string, error) {
 	if len(parentID) == 0 {
-		_, ts, _, err := app.cli.SendMessage(c.Channel, slack.MsgOptionText(fmt.Sprintf("%s\n[Reply Messsage, Parent message not found]", c.formatText(msg)), false))
+		_, ts, _, err := app.cli.SendMessage(c.Channel, slack.MsgOptionText(fmt.Sprintf("%s\n[Reply Message, Parent message not found]", c.formatText(msg)), false))
 		return ts, err
 	}
 	_, ts, _, err := app.cli.SendMessage(c.Channel, slack.MsgOptionTS(parentID), slack.MsgOptionText(c.formatText(msg), false))
@@ -59,7 +59,7 @@ func (c Chat) SendReplyMessage(parentID string, msg model.IChatMessage) (string,
 
 func (c Chat) UpdateMessage(messageID string, msg model.IChatMessage) error {
 	if len(messageID) == 0 {
-		_, _, _, err := app.cli.SendMessage(c.Channel, slack.MsgOptionText(fmt.Sprintf("%s\n[Edit Messsage, Original message not found]", c.formatText(msg)), false))
+		_, _, _, err := app.cli.SendMessage(c.Channel, slack.MsgOptionText(fmt.Sprintf("%s\n[Edit Message, Original message not found]", c.formatText(msg)), false))
 		return err
 	}
 	_, _, _, err := app.cli.UpdateMessage(c.Channel, messageID, slack.MsgOptionText(c.formatText(msg), false))
@@ -93,9 +93,9 @@ func (c Chat) RemoveReactionAll(messageID string) error {
 func (c Chat) formatText(msg model.IChatMessage) string {
 	var text string
 	if msg.Source() == c.Source() {
-		text = fmt.Sprintf("From: [%s] User: [%s]Send: \n%s", msg.BelongChannel().CName(), msg.BelongUser().UName(), msg.RawText())
+		text = fmt.Sprintf("From: [%s] User: [%s] Send: \n%s", msg.BelongChannel().CName(), msg.BelongUser().UName(), msg.RawText())
 	} else {
-		text = fmt.Sprintf("From: [%s] User: [%s]Send: \n%s", msg.Source(), msg.BelongUser().UName(), c.mentionParsing(msg.Text()))
+		text = fmt.Sprintf("From: [%s] User: [%s] Send: \n%s", msg.Source(), msg.BelongUser().UName(), c.mentionParsing(msg.Text()))
 	}
 	if att := msg.Attachment(); len(att) != 0 {
 		text += model.Attachments(att).String()
